@@ -34,7 +34,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(776, 368);
             this.dataGridView1.TabIndex = 0;
             // Remova ou comente a linha abaixo se não for necessária
-            // this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
             // 
             // btnFetchData
             // 

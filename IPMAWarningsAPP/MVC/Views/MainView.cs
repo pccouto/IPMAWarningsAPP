@@ -9,19 +9,39 @@ using IPMAWarningsApp.API;
 
 namespace IPMAWarningsApp.Views
 {
-    public partial class MainView : Form
+    public partial class MainView : Form, IMainView
     {
-        private readonly IPMAController _controller;
+        private IPMAController _controller;
         private List<Aviso> _allAvisos;
 
         public MainView()
         {
             InitializeComponent();
-            var apiCaller = new RestSharpCaller("https://api.ipma.pt/open-data/");
-            _controller = new IPMAController(apiCaller);
         }
 
-        private async void MainView_Load(object sender, EventArgs e)
+        public void SetController(IPMAController controller)
+        {
+            _controller = controller;
+        }
+
+        public void DisplayWarnings(List<Aviso> avisos)
+        {
+            _allAvisos = avisos;
+            dataGridView1.DataSource = _allAvisos;
+        }
+
+        public void PopulateIdAreaAvisoComboBox(List<string> idAreaAvisos)
+        {
+            comboBoxIdAreaAviso.Items.Clear();
+            comboBoxIdAreaAviso.Items.AddRange(idAreaAvisos.ToArray());
+        }
+
+        public void ShowError(string message)
+        {
+            MessageBox.Show($"Erro: {message}");
+        }
+
+        private void MainView_Load(object sender, EventArgs e)
         {
             // Inicialização de dados, se necessário
         }
@@ -30,17 +50,16 @@ namespace IPMAWarningsApp.Views
         {
             try
             {
-                _allAvisos = await _controller.GetWarningsAsync();
-                dataGridView1.DataSource = _allAvisos;
+                var avisos = await _controller.GetWarningsAsync();
+                DisplayWarnings(avisos);
 
                 // Preencher o ComboBox com valores únicos de IdAreaAviso
-                var idAreaAvisos = _allAvisos.Select(a => a.IdAreaAviso).Distinct().ToList();
-                comboBoxIdAreaAviso.Items.Clear();
-                comboBoxIdAreaAviso.Items.AddRange(idAreaAvisos.ToArray());
+                var idAreaAvisos = avisos.Select(a => a.IdAreaAviso).Distinct().ToList();
+                PopulateIdAreaAvisoComboBox(idAreaAvisos);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro ao buscar dados: {ex.Message}");
+                ShowError(ex.Message);
             }
         }
 
@@ -54,7 +73,7 @@ namespace IPMAWarningsApp.Views
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             // Lógica para manipular o evento CellContentClick, se necessário
         }

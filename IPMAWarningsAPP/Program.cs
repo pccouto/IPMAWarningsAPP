@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using IPMAWarningsApp.Views;
+using IPMAWarningsApp.Controllers;
+using IPMAWarningsApp.API;
 
 namespace IPMAWarningsApp
 {
@@ -14,7 +16,16 @@ namespace IPMAWarningsApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainView()); // Certifique-se de que MainView está sendo usado aqui
+
+            // Inicializar a API Caller
+            var apiCaller = new RestSharpCaller("https://api.ipma.pt/open-data/");
+
+            // Inicializar a View e o Controller
+            MainView mainView = new MainView();
+            IPMAController controller = new IPMAController(apiCaller, mainView);
+
+            // Iniciar a aplicação com a MainView
+            Application.Run(mainView);
         }
     }
 }
