@@ -1,6 +1,6 @@
 ﻿namespace IPMAWarningsApp.Views
 {
-    partial class Form1
+    partial class MainView
     {
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -33,6 +33,8 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(776, 368);
             this.dataGridView1.TabIndex = 0;
+            // Remova ou comente a linha abaixo se não for necessária
+            // this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // btnFetchData
             // 
@@ -54,17 +56,17 @@
             this.comboBoxIdAreaAviso.TabIndex = 2;
             this.comboBoxIdAreaAviso.SelectedIndexChanged += new System.EventHandler(this.comboBoxIdAreaAviso_SelectedIndexChanged);
             // 
-            // Form1
+            // MainView
             // 
-            this.Load += new System.EventHandler(this.Form1_Load); // Comente ou remova esta linha se não for necessária
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.comboBoxIdAreaAviso);
             this.Controls.Add(this.btnFetchData);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "MainView";
+            this.Text = "MainView";
+            this.Load += new System.EventHandler(this.MainView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

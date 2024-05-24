@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using IPMAWarningsApp.Views; // Certifique-se de que o namespace está correto
+using IPMAWarningsApp.Views;
 
 namespace IPMAWarningsApp
 {
@@ -14,7 +14,7 @@ namespace IPMAWarningsApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1()); // Certifique-se de que a classe Form1 está no namespace correto
+            Application.Run(new MainView()); // Certifique-se de que MainView está sendo usado aqui
         }
     }
 }

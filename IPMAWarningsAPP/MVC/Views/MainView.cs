@@ -9,24 +9,21 @@ using IPMAWarningsApp.API;
 
 namespace IPMAWarningsApp.Views
 {
-    public partial class Form1 : Form
+    public partial class MainView : Form
     {
         private readonly IPMAController _controller;
         private List<Aviso> _allAvisos;
 
-        public Form1()
+        public MainView()
         {
             InitializeComponent();
             var apiCaller = new RestSharpCaller("https://api.ipma.pt/open-data/");
             _controller = new IPMAController(apiCaller);
-            this.btnFetchData.Click += new System.EventHandler(this.btnFetchData_Click);
-            this.Load += new System.EventHandler(this.Form1_Load);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void MainView_Load(object sender, EventArgs e)
         {
-            // Se você precisa carregar dados ou executar alguma lógica ao carregar o formulário, adicione aqui
-            // Exemplo: Carregar informações iniciais ou configurar o estado do formulário
+            // Inicialização de dados, se necessário
         }
 
         private async void btnFetchData_Click(object sender, EventArgs e)
@@ -55,6 +52,11 @@ namespace IPMAWarningsApp.Views
                 var filteredAvisos = _allAvisos.Where(a => a.IdAreaAviso == selectedIdAreaAviso).ToList();
                 dataGridView1.DataSource = filteredAvisos;
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Lógica para manipular o evento CellContentClick, se necessário
         }
     }
 }
