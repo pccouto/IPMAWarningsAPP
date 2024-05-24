@@ -1,32 +1,34 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RestSharp;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using IPMAWarningsApp.Models;
-using RestSharp;
-using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace IPMAWarningsApp.API
 {
     public class RestSharpCaller : IAiCaller
     {
-        private readonly RestClient _client;
+        private readonly string _baseUrl;
 
         public RestSharpCaller(string baseUrl)
         {
-            _client = new RestClient(baseUrl);
+            _baseUrl = baseUrl;
         }
 
         public async Task<List<Aviso>> GetWarningsAsync()
         {
+            var client = new RestClient(_baseUrl);
             var request = new RestRequest("forecast/warnings/warnings_www.json", Method.Get);
-            var response = await _client.ExecuteAsync(request);
+            var response = await client.ExecuteAsync(request);
 
-            if (!response.IsSuccessful)
+            if (response.IsSuccessful)
             {
-                throw new Exception("Failed to fetch data from API");
+                var avisos = JsonConvert.DeserializeObject<List<Aviso>>(response.Content);
+                return avisos;
             }
 
-            return JsonConvert.DeserializeObject<List<Aviso>>(response.Content);
+            throw new HttpRequestException($"Erro ao obter dados: {response.StatusCode}");
         }
     }
 }
